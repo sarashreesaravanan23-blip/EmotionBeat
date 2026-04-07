@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campus Drive</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Campus Drive Students</h2>
+
+<ul id="studentList">
+    <li>Arun - TCS</li>
+    <li>Divya - Infosys</li>
+</ul>
+
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="company" placeholder="Company">
+
+<button onclick="addStudent()">Add</button>
+<button onclick="loadStudents()">Load</button>
+
+<script>
+function addStudent() {
+    let name = document.getElementById("name").value;
+    let company = document.getElementById("company").value;
+
+    if(name === "" || company === "") {
+        alert("Enter details");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.innerHTML = name + " - " + company;
+
+    document.getElementById("studentList").appendChild(li);
+}
+
+// NO FETCH (to avoid error)
+function loadStudents() {
+    let data = [
+        {name: "Sneha", company: "Accenture"},
+        {name: "Rahul", company: "Cognizant"}
+    ];
+
+    let list = document.getElementById("studentList");
+
+    data.forEach(s => {
+        let li = document.createElement("li");
+        li.innerHTML = s.name + " - " + s.company;
+        list.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
