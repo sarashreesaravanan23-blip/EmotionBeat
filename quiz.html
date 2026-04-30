@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Math Quiz</title>
+
+<style>
+  body {
+    font-family: Arial;
+    text-align: center;
+    background: #f2f2f2;
+  }
+
+  .container {
+    margin-top: 80px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .question {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .options button {
+    padding: 15px 20px;
+    margin: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .score {
+    font-size: 28px;
+    margin-top: 30px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1 id="score">Your Score: 0</h1>
+
+  <div class="question" id="question"></div>
+
+  <div class="options" id="options"></div>
+</div>
+
+<script>
+  let score = 0;
+  let current = 0;
+
+  const quiz = [
+    {
+      q: "6 + 2 = ?",
+      options: [3, 8, 5],
+      answer: 8
+    },
+    {
+      q: "5 + 3 = ?",
+      options: [6, 7, 8],
+      answer: 8
+    },
+    {
+      q: "10 * 10 = ?",
+      options: [300, 500, 100],
+      answer: 100
+    }
+  ];
+
+  function loadQuestion() {
+    if (current >= quiz.length) {
+      document.getElementById("question").innerHTML = "Quiz Completed!";
+      document.getElementById("options").innerHTML = "";
+      return;
+    }
+
+    document.getElementById("question").innerHTML = quiz[current].q;
+
+    let optionsHTML = "";
+    quiz[current].options.forEach(opt => {
+      optionsHTML += `<button onclick="checkAnswer(${opt})">${opt}</button>`;
+    });
+
+    document.getElementById("options").innerHTML = optionsHTML;
+  }
+
+  function checkAnswer(selected) {
+    if (selected === quiz[current].answer) {
+      score++;
+    }
+
+    document.getElementById("score").innerHTML = "Your Score: " + score;
+
+    current++;
+    loadQuestion();
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
