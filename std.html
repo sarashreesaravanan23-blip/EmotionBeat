@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Form</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #eee;
+    }
+
+    .container {
+      width: 500px;
+      margin: 50px auto;
+      background: #f5f5f5;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #999;
+      border-radius: 3px;
+    }
+
+    button {
+      padding: 8px 15px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .action-btn {
+      margin: 3px;
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Student Form</h2>
+
+  <input type="text" id="name" placeholder="Enter Name">
+  <input type="email" id="email" placeholder="Enter Email">
+
+  <br>
+  <button onclick="addOrUpdate()">Add / Update</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<script>
+  let editIndex = -1;
+  let students = [];
+
+  function addOrUpdate() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+
+    if (name === "" || email === "") {
+      alert("Please fill all fields");
+      return;
+    }
+
+    if (editIndex === -1) {
+      students.push({ name, email });
+    } else {
+      students[editIndex] = { name, email };
+      editIndex = -1;
+    }
+
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+
+    displayData();
+  }
+
+  function displayData() {
+    let table = document.getElementById("tableBody");
+    table.innerHTML = "";
+
+    students.forEach((student, index) => {
+      table.innerHTML += `
+        <tr>
+          <td>${student.name}</td>
+          <td>${student.email}</td>
+          <td>
+            <button class="action-btn" onclick="editData(${index})">Edit</button>
+            <button class="action-btn" onclick="deleteData(${index})">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  function editData(index) {
+    document.getElementById("name").value = students[index].name;
+    document.getElementById("email").value = students[index].email;
+    editIndex = index;
+  }
+
+  function deleteData(index) {
+    students.splice(index, 1);
+    displayData();
+  }
+</script>
+
+</body>
+</html>
